@@ -1,0 +1,204 @@
+/*Updated CSS file with Company Logo Colours*/
+:root {
+  --geo-blue-dark: #13244E;
+  --geo-blue: #29B2D2;
+  --geo-blue-light: #7BDCF0;
+  --geo-blue-mid: #175E6C;
+
+  --geo-green: #69BE43;
+  --geo-green-light: #A3E472;
+  --geo-green-dark: #4C8930;
+
+  --geo-orange: #F07F22;
+  --geo-orange-light: #F7AD72;
+  --geo-orange-dark: #C85F12;
+
+  --geo-white: #FFFFFF;
+  --geo-gray-light: #F5F7FA;
+  --geo-gray-mid: #D9DEE2;
+  --geo-gray-dark: #6C757D;
+
+  --geo-font: 'Montserrat', Arial, sans-serif;
+}
+
+/* Gradient animated background for header */
+header {
+  width: 100%;
+  padding: 38px 0 24px 0;
+  margin-bottom: 24px;
+  background: linear-gradient(120deg, var(--geo-blue), var(--geo-green), var(--geo-blue-light), var(--geo-orange-light));
+  background-size: 400% 400%;
+  animation: gradientMove 8s ease infinite;
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 6px 24px rgba(41, 178, 210, 0.10);
+}
+
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+body {
+  font-family: var(--geo-font);
+  background: linear-gradient(110deg, var(--geo-gray-light) 70%, var(--geo-blue-light) 100%);
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  color: var(--geo-blue-dark);
+}
+
+/* Glassmorphism Card Container */
+.container {
+  max-width: 900px;
+  margin: 40px auto 48px auto;
+  background: rgba(255,255,255,0.90);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(41,178,210,0.10), 0 2px 12px rgba(105,190,67,0.08);
+  backdrop-filter: blur(6px);
+  padding: 36px 40px;
+  text-align: center;
+}
+
+/* Title Styling */
+h1 {
+  color: var(--geo-blue-dark);
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  text-shadow: 0 3px 9px rgba(23,94,108,0.06);
+  margin-bottom: 18px;
+}
+
+/* Buttons with animated gradient, glass effect, and micro interaction */
+button {
+  background: linear-gradient(135deg, var(--geo-blue), var(--geo-green));
+  color: var(--geo-white);
+  border: none;
+  padding: 12px 26px;
+  margin: 8px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-family: inherit;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(29,178,210,0.13), 0 1px 4px rgba(24,94,108,0.10);
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: 
+    box-shadow 0.22s cubic-bezier(.25,.8,.25,1),
+    transform 0.22s cubic-bezier(.25,.8,.25,1),
+    background 0.32s cubic-bezier(.25,.8,.25,1);
+}
+
+button:hover {
+  transform: translateY(-2px) scale(1.06);
+  background: linear-gradient(135deg, var(--geo-blue-dark), var(--geo-green-dark));
+  box-shadow: 0 8px 30px rgba(29,178,210,0.21), 0 2px 12px rgba(24,94,108,0.14);
+}
+
+button:focus {
+  border: 2px solid var(--geo-blue);
+}
+
+/* Subtle animated ripple effect (glassmorphism) on button click */
+button:active {
+  animation: btnRipple 0.3s cubic-bezier(.25,.8,.80,1);
+}
+@keyframes btnRipple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(41,178,210, 0.24);
+  }
+  100% {
+    box-shadow: 0 0 0 12px rgba(41,178,210, 0.0);
+  }
+}
+
+/* Inputs: glass effect, transitions, and expressive focus style */
+input[type="text"], input[type="email"], input[type="password"] {
+  padding: 11px 18px;
+  border-radius: 9px;
+  border: 1.6px solid var(--geo-gray-mid);
+  background: rgba(245, 247, 250, 0.93);
+  font-size: 1rem;
+  font-family: inherit;
+  margin: 8px 0 16px 0;
+  transition: border-color 0.3s, box-shadow 0.25s;
+  color: var(--geo-blue-mid);
+  box-shadow: 0 2px 10px rgba(23,94,108,0.07);
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+  outline: none;
+  border-color: var(--geo-blue);
+  box-shadow: 0 0 9px rgba(41,178,210,0.24);
+  background: rgba(255,255,255,0.99);
+}
+
+/* Add subtle icon before form fields (optional, requires <label> and <span> approach) */
+label {
+  font-weight: 600;
+  color: var(--geo-blue-mid);
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+/* Animated expressive accent for inputs */
+input[type="text"]:hover, input[type="email"]:hover, input[type="password"]:hover {
+  border-color: var(--geo-green-light);
+  background: rgba(245,247,250, 0.98);
+}
+
+/* Footer: animated gradient and white glass overlay */
+footer {
+  background: linear-gradient(100deg, var(--geo-orange-light) 8%, var(--geo-blue-mid) 100%);
+  background-size: 200% 120%;
+  animation: gradientMove 9s linear infinite;
+  color: var(--geo-white);
+  font-size: 1.08rem;
+  letter-spacing: 1px;
+  padding: 38px 0 26px 0;
+  border-radius: 24px 24px 0 0;
+  text-align: center;
+  box-shadow: 0 -4px 18px rgba(240,127,34,0.09);
+  margin-top: 48px;
+}
+/* Logo placement*/
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px 32px 16px 32px;
+  background: none;
+  box-shadow: none;
+}
+.logo {
+  height: 80px;
+  width: auto;
+  margin-right: 18px;
+}
+.site-header h1 {
+  margin: 0;
+  font-size: 2.3rem;
+  color: var(--geo-blue-mid);
+  font-weight: 800;
+  text-align: left;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .container {
+    padding: 16px;
+  }
+  header, footer {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+}
+
