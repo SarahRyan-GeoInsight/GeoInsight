@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- Include the CesiumJS JavaScript and CSS files -->
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.134/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.134/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+</head>
+<body>
+
+  <h1>Geoinsight Web Application</h1>
+
+  <button type="button" >HOME</button>
+
+  <button onclick="showAbout()">About</button>
+
+  <p id="aboutText" style="display:none; margin-top:10px;">
+    This 3D web map highlights Sustainable Development Goal 3 (SDG 3: Good Health and Well-being) at Hatfield Campus. 
+    It demonstrates campus health initiatives, facilities, and safe spaces. 
+    The map can be used to plan and improve wellness activities, monitor health-related infrastructure, 
+    and educate students and staff about maintaining good health on campus.
+  </p>
+
+  <button onclick="filterBuildings()">Filter Buildings</button>
+  <button type="button">Layers</button>
+  <input type="text" placeholder="Type here...">
+  <button>Search</button>
+  
+  <div id="cesiumContainer"></div>
+  <script type="module">
+    // Your access token can be found at: https://ion.cesium.com/tokens.
+    // Replace `your_access_token` with your Cesium ion access token.
+
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlNGViYmM2OS0yOWY1LTQ4YzMtOTczMS1hMzY4NDE0YTA3ZWUiLCJpZCI6MzI5NjUzLCJpYXQiOjE3NTQ1NTQ1ODV9.x5fgneoR7V-JK7dLUIJVZ0Nxsnlp3xYTfiIbJ2EE8-M';
+
+    // Initialize the Cesium Viewer in the HTML element with the `cesiumContainer` ID.
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      terrain: Cesium.Terrain.fromWorldTerrain(),
+    });    
+
+    // Fly the camera to the University of Pretoria at the given longitude, latitude, and height.
+    viewer.camera.flyTo({
+  destination: Cesium.Cartesian3.fromDegrees(28.230834, -25.755833, 2000), // 2000m above ground
+  orientation: {
+    heading: Cesium.Math.toRadians(0.0),
+    pitch: Cesium.Math.toRadians(-15.0),
+  }
+});
+  
+   
+
+    // Add Cesium OSM Buildings, a global 3D buildings layer.
+    const buildingTileset = await Cesium.createOsmBuildingsAsync();
+    viewer.scene.primitives.add(buildingTileset); 
+
+  src="main.js"
+  </script>
+ </div>
+<script src="main.js"></script>
+ <link rel="stylesheet" href="style.css"></link>
+</body>
+</html>
