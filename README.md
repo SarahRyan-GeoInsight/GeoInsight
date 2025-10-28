@@ -32,3 +32,21 @@ Zonal Statistics - Minimum shapefile + sidecar files
 
 Zonal Statistics - Maximum shapefile + sidecar files
 
+# u18281011\_GMT320\_ST2\_Question2
+
+
+
+Files:
+
+3D Model .gltf file
+
+CesiumSetup_CDN HTML file
+
+3D Model in web application screenshot
+
+3D Model in web application showing Geography Building attributes screenshot
+
+main.js JavaScript file
+
+CSS file
+
