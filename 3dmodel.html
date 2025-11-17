@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>UP Hatfield 3D Map</title>
+
+
+  <!-- CesiumJS -->
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.134/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.134/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+
+
+  <style>
+    html, body, #cesiumContainer {
+      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+<div id="cesiumContainer"></div>
+
+
+<script type="module">
+Cesium.Ion.defaultAccessToken =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlNGViYmM2OS0yOWY1LTQ4YzMtOTczMS1hMzY4NDE0YTA3ZWUiLCJpZCI6MzI5NjUzLCJpYXQiOjE3NTQ1NTQ1ODV9.x5fgneoR7V-JK7dLUIJVZ0Nxsnlp3xYTfiIbJ2EE8-M';
+
+
+// STEP 1 — Create Viewer with terrain
+const viewer = new Cesium.Viewer("cesiumContainer", {
+  terrain: Cesium.Terrain.fromWorldTerrain(),
+  baseLayerPicker: true,
+  geocoder: false,
+  timeline: false,
+  animation: false
+});
+
+
+// STEP 2 — Fly to Hatfield Campus
+viewer.camera.flyTo({
+  destination: Cesium.Cartesian3.fromDegrees(28.2314, -25.7550, 300),
+  orientation: {
+    heading: Cesium.Math.toRadians(0),
+    pitch: Cesium.Math.toRadians(-35)
+  }
+});
+
+
+// STEP 3 — Load 3D Buildings with Height
+Cesium.GeoJsonDataSource.load("Buildings.geojson").then((dataSource) => {
+  viewer.dataSources.add(dataSource);
+
+
+  const entities = dataSource.entities.values;
+  for (let entity of entities) {
+    if (entity.polygon) {
+      const height = entity.properties.Height
+        ? entity.properties.Height.getValue()
+        : 10;
+
+
+      entity.polygon.height = 0;
+      entity.polygon.extrudedHeight = height;
+      entity.polygon.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
+      entity.polygon.extrudedHeightReference =
+        Cesium.HeightReference.RELATIVE_TO_GROUND;
+     
+      // ✅ Buildings solid orange
+      entity.polygon.material = Cesium.Color.ORANGE.withAlpha(1.0);
+      entity.polygon.outline = true;
+      entity.polygon.outlineColor = Cesium.Color.BLACK;
+    }
+  }
+});
+
+
+// STEP 4 — Load remaining 2D layers and Lights as 3D models
+const otherLayers = [
+  "Main road.geojson",
+  "paths.geojson",
+  "Green spaces.geojson",
+  "Lights.geojson",
+  "Entrance.geojson"
+];
+
+
+for (const file of otherLayers) {
+  Cesium.GeoJsonDataSource.load(file, { clampToGround: true })
+    .then((dataSource) => {
+
+
+      const entities = dataSource.entities.values;
+
+
+      // ===== STYLE MAIN ROAD =====
+      if (file === "Main road.geojson") {
+        for (let entity of entities) {
+          if (entity.polyline) {
+            entity.polyline.clampToGround = true;
+            entity.polyline.width = 6;
+            entity.polyline.material = Cesium.Color.BLACK;
+          }
+        }
+      }
+
+
+      // ===== STYLE PATHS =====
+      if (file === "paths.geojson") {
+        for (let entity of entities) {
+          if (entity.polyline) {
+            entity.polyline.clampToGround = true;
+            entity.polyline.width = 3;
+            entity.polyline.material = new Cesium.PolylineDashMaterialProperty({
+              color: Cesium.Color.YELLOW,
+            });
+          }
+        }
+      }
+
+
+      // ===== LIGHTS AS 3D MODELS =====
+      // ===== LIGHTS AS SMALL 2D POINTS (TEMP) =====
+    if (file === "Lights.geojson") {
+      for (let entity of entities) {
+        if (entity.position) {
+          entity.point = new Cesium.PointGraphics({
+          pixelSize: 6, // 👈 smaller point size
+          color: Cesium.Color.WHITE,
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+      });
+    }
+  }
+}
+    if (file === "Entrance.geojson") {
+      for (let entity of entities) {
+        if (entity.position) {
+          entity.point = new Cesium.PointGraphics({
+          pixelSize: 6, // 👈 smaller point size
+          color: Cesium.Color.RED,
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+      });
+    }
+  }
+}
+      viewer.dataSources.add(dataSource);
+    });
+}
+</script>
+</body>
+</html>
+
+
+
